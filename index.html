@@ -7,108 +7,186 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
-        body { background: linear-gradient(180deg, #0B0B0D 0%, #1A1A2E 100%); color: #F5F5F5; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; min-height: 100vh; }
+        /* 引入 Lovable 风格的高级字体 */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;400&display=swap');
+        
+        body { 
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0B0B0D 100%); 
+            color: #F5F5F5; 
+            font-family: 'Noto Serif SC', serif; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 标题样式：复刻 Lovable 的高级感 */
+        .oracle-title { 
+            font-family: 'Cinzel', serif; 
+            letter-spacing: 0.3em;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
         .dream-font { font-family: 'Ma Shan Zheng', cursive; }
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; }
-        .ink-appear { animation: inkFade 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-        @keyframes inkFade { from { opacity: 0; transform: translateY(20px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+        
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.02); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 32px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .tag-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .tag-pill:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .ink-appear { animation: inkFade 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        @keyframes inkFade { 
+            from { opacity: 0; transform: translateY(30px); filter: blur(15px); } 
+            to { opacity: 1; transform: translateY(0); filter: blur(0); } 
+        }
+
+        /* 呼吸灯按钮 */
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+            transition: all 0.5s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            background: rgba(212, 175, 55, 0.1);
+        }
     </style>
 </head>
-<body class="flex flex-col items-center p-4 sm:p-8">
+<body class="flex flex-col items-center p-6 sm:p-12">
 
-    <header class="w-full max-w-xl flex justify-between items-center mb-12 z-10">
-        <div class="flex items-center gap-3">
-            <div id="status-dot" class="w-2 h-2 rounded-full bg-yellow-600 animate-pulse"></div>
-            <span class="tracking-[0.4em] text-[10px] text-yellow-600/80 font-light uppercase">Dream Oracle V5.3</span>
+    <header class="w-full max-w-2xl flex justify-between items-center mb-16 z-10">
+        <div class="flex items-center gap-4">
+            <div id="status-dot" class="w-1.5 h-1.5 rounded-full bg-yellow-600 animate-pulse"></div>
+            <span class="tracking-[0.5em] text-[10px] text-yellow-600/60 font-bold uppercase">Dream Oracle V5.5</span>
         </div>
-        <div class="flex gap-2">
-            <button onclick="location.reload()" class="p-2 hover:bg-white/5 rounded-full transition-colors text-gray-500 hover:text-white"><i data-lucide="refresh-cw" class="w-4 h-4"></i></button>
-            <button onclick="toggleSettings()" class="p-2 hover:bg-white/5 rounded-full transition-colors text-gray-500 hover:text-yellow-600"><i data-lucide="key" class="w-4 h-4"></i></button>
+        <div class="flex gap-4">
+            <button onclick="location.reload()" class="p-2 text-gray-500 hover:text-white transition-colors"><i data-lucide="refresh-cw" class="w-4 h-4"></i></button>
+            <button onclick="toggleSettings()" class="p-2 text-gray-500 hover:text-yellow-600 transition-colors"><i data-lucide="settings" class="w-4 h-4"></i></button>
         </div>
     </header>
 
-    <main class="w-full max-w-xl z-10">
-        <section id="input-view" class="space-y-10 py-10">
-            <div class="text-center space-y-4">
-                <h1 class="text-5xl text-white/90 dream-font tracking-tight">捕捉潜意识的碎片</h1>
-                <p class="text-gray-400 text-sm italic font-light">占梦师正在深潜，请描述你的梦境...</p>
+    <main class="w-full max-w-2xl z-10">
+        <!-- 首页视图 -->
+        <section id="input-view" class="space-y-12 py-10">
+            <div class="text-center space-y-6">
+                <h1 class="text-6xl text-white/90 oracle-title font-bold">DREAM ORACLE</h1>
+                <p class="text-gray-500 text-sm tracking-[0.2em] font-light">捕捉潜意识的碎片...</p>
             </div>
-            <div class="glass-card p-8 space-y-6">
-                <textarea id="dream-input" rows="6" class="w-full bg-transparent border-none focus:ring-0 text-lg placeholder-gray-800 resize-none leading-relaxed" placeholder="描述你梦中的意象..."></textarea>
+
+            <!-- 意象标签云 -->
+            <div class="flex flex-wrap justify-center gap-3 px-4">
+                <button onclick="addTag('森林')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 森林</button>
+                <button onclick="addTag('坠落')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 坠落</button>
+                <button onclick="addTag('时钟')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 时钟</button>
+                <button onclick="addTag('深海')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 深海</button>
+                <button onclick="addTag('被追逐')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 被追逐</button>
+                <button onclick="addTag('迷失')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 迷失</button>
             </div>
-            <button onclick="startOracle()" id="submit-btn" class="w-full py-5 bg-yellow-950/10 border border-yellow-700/20 rounded-full text-yellow-600 tracking-[0.6em] font-light hover:bg-yellow-900/20 transition-all flex justify-center items-center gap-2">
-                递给占梦师 <i data-lucide="sparkles" class="w-4 h-4"></i>
+
+            <div class="glass-card p-10 mt-6">
+                <textarea id="dream-input" rows="6" 
+                    class="w-full bg-transparent border-none focus:ring-0 text-xl placeholder-gray-800 resize-none leading-relaxed text-center" 
+                    placeholder="刚才的梦里..."></textarea>
+            </div>
+
+            <button onclick="startOracle()" id="submit-btn" 
+                class="w-full py-6 bg-transparent border border-yellow-700/30 rounded-full text-yellow-600 tracking-[0.8em] font-light btn-glow uppercase text-xs">
+                递给占梦师
             </button>
         </section>
 
-        <section id="oracle-view" class="hidden space-y-8 pb-32">
-            <div id="chat-flow" class="space-y-8"></div>
-            <div id="loading-area" class="hidden py-10 flex flex-col items-center space-y-4">
-                <div class="w-8 h-8 border-2 border-yellow-600/10 border-t-yellow-600 rounded-full animate-spin"></div>
-                <p class="text-[10px] text-yellow-600/50 italic tracking-widest text-center">正在读取潜意识信号...</p>
+        <!-- 对话视图 -->
+        <section id="oracle-view" class="hidden space-y-10 pb-32">
+            <div id="chat-flow" class="space-y-10"></div>
+            <div id="loading-area" class="hidden py-20 flex flex-col items-center space-y-6">
+                <div class="w-10 h-10 border-2 border-yellow-600/10 border-t-yellow-600 rounded-full animate-spin"></div>
+                <p class="text-[10px] text-yellow-600/40 tracking-[0.4em] uppercase">占梦师正在进入梦境</p>
             </div>
-            <div id="reply-box" class="hidden glass-card p-3 flex gap-4 sticky bottom-6 shadow-2xl">
-                <input id="user-reply" type="text" class="flex-1 bg-transparent border-none focus:ring-0 text-sm px-4" placeholder="回应占梦师...">
-                <button onclick="submitReply()" class="p-2 text-yellow-600 hover:scale-110 transition-transform"><i data-lucide="send" class="w-5 h-5"></i></button>
+            <div id="reply-box" class="hidden glass-card p-4 flex gap-4 sticky bottom-8 shadow-2xl">
+                <input id="user-reply" type="text" class="flex-1 bg-transparent border-none focus:ring-0 text-sm px-4" placeholder="向深渊回应...">
+                <button onclick="submitReply()" class="p-3 text-yellow-600 hover:scale-125 transition-transform"><i data-lucide="send" class="w-5 h-5"></i></button>
             </div>
         </section>
     </main>
 
-    <!-- 设置弹窗 -->
-    <div id="settings-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md hidden z-50 flex items-center justify-center p-6">
-        <div class="glass-card w-full max-w-sm p-8 space-y-6">
-            <div class="text-center">
-                <h3 class="text-yellow-600 dream-font text-3xl">感应密钥</h3>
-                <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-2">API Key Configuration</p>
+    <!-- 设置面板 -->
+    <div id="settings-modal" class="fixed inset-0 bg-black/95 backdrop-blur-xl hidden z-50 flex items-center justify-center p-8">
+        <div class="glass-card w-full max-w-sm p-10 space-y-8 border-yellow-600/20">
+            <div class="text-center space-y-2">
+                <h3 class="text-yellow-600 oracle-title text-2xl font-bold">CONFIG</h3>
+                <p class="text-[10px] text-gray-600 uppercase tracking-widest">设置你的感应参数</p>
             </div>
-            <input id="api-key-input" type="password" placeholder="粘贴你的 AI Studio Key" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-600/50 text-white">
-            <button onclick="saveApiKey()" class="w-full py-4 bg-yellow-600/10 text-yellow-600 border border-yellow-600/20 rounded-xl text-xs tracking-[0.4em] hover:bg-yellow-600/20 transition-all font-bold">保存密钥</button>
-            <button onclick="toggleSettings()" class="w-full text-[10px] text-gray-500 hover:text-white">取消</button>
+            <div class="space-y-6">
+                <div class="space-y-2">
+                    <label class="text-[10px] text-gray-500 uppercase tracking-tighter ml-1">API Key</label>
+                    <input id="api-key-input" type="password" placeholder="粘贴你的密钥" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:border-yellow-600/50 outline-none text-white">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] text-gray-500 uppercase tracking-tighter ml-1">Model (如报错请尝试更换)</label>
+                    <input id="model-name-input" type="text" placeholder="gemini-1.5-flash" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:border-yellow-600/50 outline-none text-white">
+                </div>
+            </div>
+            <button onclick="saveSettings()" class="w-full py-5 bg-yellow-600/10 text-yellow-600 border border-yellow-600/20 rounded-2xl text-xs tracking-[0.5em] font-bold uppercase hover:bg-yellow-600/20 transition-all">确认并保存</button>
+            <button onclick="toggleSettings()" class="w-full text-[10px] text-gray-600 hover:text-white uppercase tracking-widest">取消</button>
         </div>
     </div>
 
     <script>
         let apiKey = localStorage.getItem('dream_oracle_key') || "";
-        // 关键修复：改为使用 1.5-flash，这个模型配额极大且非常稳定
-        const modelName = "gemini-1.5-flash"; 
+        let modelName = localStorage.getItem('dream_oracle_model') || "gemini-1.5-flash"; 
+        
         let chatHistory = [];
         let currentTurn = 0;
 
-        const systemPrompt = `你是一位神秘占梦师。请基于荣格心理学，以神秘、温柔的口吻与用户对话。
-        Turn 1 & 2: 引导提问。Turn 3: 给出分析结论、action和image_prompt。
-        输出：严格JSON: {"analysis":"","question":"","action":"","image_prompt":"","is_crisis":false}`;
+        const systemPrompt = `你是一位深谙荣格心理学的占梦师。语气神秘、空灵。
+        Turn 1&2: 识别意象，提出具体问题（带示例）。
+        Turn 3: 给出分析、action和image_prompt。
+        输出：严格 JSON 格式。`;
 
         lucide.createIcons();
 
-        function toggleSettings() { document.getElementById('settings-modal').classList.toggle('hidden'); }
-        function saveApiKey() {
-            const val = document.getElementById('api-key-input').value.trim();
-            if (val) { localStorage.setItem('dream_oracle_key', val); apiKey = val; toggleSettings(); alert("密钥已保存"); }
+        function addTag(val) {
+            const input = document.getElementById('dream-input');
+            input.value += (input.value ? ' ' : '') + '#' + val;
+        }
+
+        function toggleSettings() { 
+            document.getElementById('settings-modal').classList.toggle('hidden');
+            document.getElementById('api-key-input').value = apiKey;
+            document.getElementById('model-name-input').value = modelName;
+        }
+
+        function saveSettings() {
+            apiKey = document.getElementById('api-key-input').value.trim();
+            modelName = document.getElementById('model-name-input').value.trim();
+            localStorage.setItem('dream_oracle_key', apiKey);
+            localStorage.setItem('dream_oracle_model', modelName);
+            toggleSettings();
+            alert("感应参数已更新。");
         }
 
         async function fetchOracle(text) {
-            if (!apiKey) { toggleSettings(); throw new Error("请先点击右上角设置 API Key"); }
+            if (!apiKey) { toggleSettings(); throw new Error("缺少感应密钥"); }
             chatHistory.push({ role: "user", parts: [{ text: text }] });
-            
-            // 使用 Vercel 代理路径
             const url = `/api/google/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
-            
             const payload = {
                 contents: chatHistory,
                 systemInstruction: { parts: [{ text: systemPrompt }] },
-                generationConfig: { responseMimeType: "application/json", temperature: 0.8 }
+                generationConfig: { responseMimeType: "application/json", temperature: 0.85 }
             };
-
-            const response = await fetch(url, { 
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify(payload) 
-            });
-            
+            const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             const data = await response.json();
             if (!response.ok) throw new Error(data.error?.message || `HTTP ${response.status}`);
-            
             const resultText = data.candidates[0].content.parts[0].text;
             chatHistory.push({ role: "model", parts: [{ text: resultText }] });
             return JSON.parse(resultText);
@@ -124,10 +202,7 @@
                 const data = await fetchOracle(val);
                 currentTurn = 1;
                 renderStep(data);
-            } catch (e) { 
-                alert(`占梦失败: ${e.message}`); 
-                location.reload(); 
-            }
+            } catch (e) { alert(`占梦受阻: ${e.message}`); location.reload(); }
         }
 
         async function submitReply() {
@@ -147,14 +222,14 @@
             document.getElementById('loading-area').classList.add('hidden');
             const flow = document.getElementById('chat-flow');
             const card = document.createElement('div');
-            card.className = "glass-card p-10 space-y-8 ink-appear";
+            card.className = "glass-card p-12 space-y-10 ink-appear";
             card.innerHTML = `
-                <div class="space-y-4">
-                    <p class="text-[9px] tracking-[0.5em] text-yellow-600/40 uppercase font-bold">占梦师的私语</p>
-                    <p class="text-xl italic font-light leading-relaxed text-gray-100">${data.analysis}</p>
+                <div class="space-y-6">
+                    <p class="text-[9px] tracking-[0.6em] text-yellow-600/40 uppercase font-bold text-center">Revelation</p>
+                    <p class="text-2xl italic font-light leading-relaxed text-gray-100 dream-font text-center">${data.analysis}</p>
                 </div>
-                ${data.question && currentTurn < 3 ? `<div class="pt-6 border-t border-white/5"><p class="text-sm text-gray-400 font-light italic">"${data.question}"</p></div>` : ''}
-                ${data.action && currentTurn >= 3 ? `<div class="p-6 bg-yellow-900/10 rounded-3xl border border-yellow-700/20"><p class="text-[9px] text-yellow-700 uppercase tracking-widest mb-2">现实锚定</p><p class="text-sm text-yellow-600 font-medium">${data.action}</p></div>` : ''}
+                ${data.question && currentTurn < 3 ? `<div class="pt-8 border-t border-white/5"><p class="text-sm text-gray-400 font-light italic text-center">"${data.question}"</p></div>` : ''}
+                ${data.action && currentTurn >= 3 ? `<div class="p-8 bg-yellow-900/5 rounded-3xl border border-yellow-700/10 text-center"><p class="text-[9px] text-yellow-700/60 uppercase tracking-widest mb-3">现实神谕</p><p class="text-sm text-yellow-600 font-medium">${data.action}</p></div>` : ''}
             `;
             flow.appendChild(card);
             if (currentTurn < 3) document.getElementById('reply-box').classList.remove('hidden');
