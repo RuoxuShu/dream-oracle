@@ -3,155 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dream Oracle | 潜意识绘本</title>
+    <title>潜意识绘本 | 梦境仓库</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* 引入 Lovable 风格的高级字体 */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;400&display=swap');
+        /* 引入更符合中文高级感的字体 */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@100;300;400&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;400;700&display=swap');
         
+        :root {
+            --accent-gold: #d4af37;
+            --deep-black: #050505;
+        }
+
         body { 
-            background: radial-gradient(circle at center, #1a1a2e 0%, #0B0B0D 100%); 
-            color: #F5F5F5; 
+            background-color: var(--deep-black);
+            background-image: 
+                radial-gradient(circle at 50% -20%, #1a1a3a 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, #0a0a15 0%, transparent 40%);
+            color: #ececec; 
             font-family: 'Noto Serif SC', serif; 
             min-height: 100vh;
             overflow-x: hidden;
+            letter-spacing: 0.05em;
         }
 
-        /* 标题样式：复刻 Lovable 的高级感 */
-        .oracle-title { 
-            font-family: 'Cinzel', serif; 
-            letter-spacing: 0.3em;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        /* 标题：中西合璧，Lovable 风格的高级排版 */
+        .brand-title { 
+            font-family: 'Noto Serif SC', serif; 
+            font-weight: 200;
+            letter-spacing: 0.8em;
+            margin-right: -0.8em; /* 抵消最后一个字的间距使其居中 */
+            background: linear-gradient(to bottom, #ffffff 30%, #777777 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
+        .brand-sub {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.4em;
+            font-size: 0.6rem;
+            color: #444;
+        }
+
         .dream-font { font-family: 'Ma Shan Zheng', cursive; }
         
-        .glass-card { 
-            background: rgba(255, 255, 255, 0.02); 
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            border-radius: 32px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        /* 极致轻薄的玻璃质感 */
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.01); 
+            backdrop-filter: blur(40px); 
+            border: 1px solid rgba(255, 255, 255, 0.04); 
+            border-radius: 40px;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .tag-pill {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #555;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            font-size: 0.65rem;
+            font-family: 'Inter', sans-serif;
         }
         .tag-pill:hover {
-            background: rgba(212, 175, 55, 0.1);
-            border-color: rgba(212, 175, 55, 0.4);
-            transform: translateY(-2px);
+            border-color: rgba(212, 175, 55, 0.3);
+            color: var(--accent-gold);
+            transform: translateY(-1px);
         }
 
-        .ink-appear { animation: inkFade 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        /* 主操作按钮：纯白反差设计 */
+        .btn-main {
+            background: #ffffff;
+            color: #000000;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            padding-left: 2.4rem; /* 增加偏移量以平衡字间距 */
+            font-weight: 700;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(255,255,255,0.1);
+        }
+
+        .ink-reveal { animation: inkFade 1.6s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
         @keyframes inkFade { 
-            from { opacity: 0; transform: translateY(30px); filter: blur(15px); } 
+            from { opacity: 0; transform: translateY(40px); filter: blur(20px); } 
             to { opacity: 1; transform: translateY(0); filter: blur(0); } 
         }
 
-        /* 呼吸灯按钮 */
-        .btn-glow {
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
-            transition: all 0.5s ease;
-        }
-        .btn-glow:hover {
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-            background: rgba(212, 175, 55, 0.1);
-        }
+        textarea::placeholder { color: #222; font-weight: 200; }
     </style>
 </head>
-<body class="flex flex-col items-center p-6 sm:p-12">
+<body class="flex flex-col items-center px-6 py-16 md:py-24">
 
-    <header class="w-full max-w-2xl flex justify-between items-center mb-16 z-10">
-        <div class="flex items-center gap-4">
-            <div id="status-dot" class="w-1.5 h-1.5 rounded-full bg-yellow-600 animate-pulse"></div>
-            <span class="tracking-[0.5em] text-[10px] text-yellow-600/60 font-bold uppercase">Dream Oracle V5.5</span>
+    <!-- 极简页眉 -->
+    <header class="w-full max-w-2xl flex justify-between items-center mb-24 z-10">
+        <div class="flex items-center gap-3">
+            <div class="w-1 h-1 rounded-full bg-yellow-600"></div>
+            <span class="tracking-[0.4em] text-[8px] text-gray-700 font-bold uppercase">Subconscious Archive</span>
         </div>
-        <div class="flex gap-4">
-            <button onclick="location.reload()" class="p-2 text-gray-500 hover:text-white transition-colors"><i data-lucide="refresh-cw" class="w-4 h-4"></i></button>
-            <button onclick="toggleSettings()" class="p-2 text-gray-500 hover:text-yellow-600 transition-colors"><i data-lucide="settings" class="w-4 h-4"></i></button>
+        <div class="flex gap-6">
+            <button onclick="location.reload()" class="text-gray-700 hover:text-white transition-colors"><i data-lucide="refresh-cw" class="w-4 h-4"></i></button>
+            <button onclick="toggleSettings()" class="text-gray-700 hover:text-yellow-600 transition-colors"><i data-lucide="settings-2" class="w-4 h-4"></i></button>
         </div>
     </header>
 
     <main class="w-full max-w-2xl z-10">
-        <!-- 首页视图 -->
-        <section id="input-view" class="space-y-12 py-10">
-            <div class="text-center space-y-6">
-                <h1 class="text-6xl text-white/90 oracle-title font-bold">DREAM ORACLE</h1>
-                <p class="text-gray-500 text-sm tracking-[0.2em] font-light">捕捉潜意识的碎片...</p>
+        <!-- 录入阶段 -->
+        <section id="input-view" class="space-y-16">
+            <div class="text-center space-y-4">
+                <h1 class="text-5xl md:text-6xl brand-title">幻梦启示录</h1>
+                <p class="brand-sub">THE DREAM DIARY</p>
             </div>
 
-            <!-- 意象标签云 -->
-            <div class="flex flex-wrap justify-center gap-3 px-4">
-                <button onclick="addTag('森林')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 森林</button>
-                <button onclick="addTag('坠落')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 坠落</button>
-                <button onclick="addTag('时钟')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 时钟</button>
-                <button onclick="addTag('深海')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 深海</button>
-                <button onclick="addTag('被追逐')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 被追逐</button>
-                <button onclick="addTag('迷失')" class="tag-pill px-4 py-1.5 rounded-full text-xs text-gray-400"># 迷失</button>
+            <!-- 意象快速选择 -->
+            <div class="flex flex-wrap justify-center gap-2 max-w-sm mx-auto">
+                <button onclick="addTag('森林')" class="tag-pill px-4 py-1.5 rounded-full">森林</button>
+                <button onclick="addTag('坠落')" class="tag-pill px-4 py-1.5 rounded-full">坠落</button>
+                <button onclick="addTag('深海')" class="tag-pill px-4 py-1.5 rounded-full">深海</button>
+                <button onclick="addTag('飞翔')" class="tag-pill px-4 py-1.5 rounded-full">飞翔</button>
+                <button onclick="addTag('无脸人')" class="tag-pill px-4 py-1.5 rounded-full">无脸人</button>
+                <button onclick="addTag('金色时钟')" class="tag-pill px-4 py-1.5 rounded-full">金色时钟</button>
             </div>
 
-            <div class="glass-card p-10 mt-6">
-                <textarea id="dream-input" rows="6" 
-                    class="w-full bg-transparent border-none focus:ring-0 text-xl placeholder-gray-800 resize-none leading-relaxed text-center" 
+            <div class="glass-panel p-2">
+                <textarea id="dream-input" rows="5" 
+                    class="w-full bg-transparent border-none focus:ring-0 text-3xl text-white font-extralight p-10 resize-none leading-relaxed text-center" 
                     placeholder="刚才的梦里..."></textarea>
             </div>
 
-            <button onclick="startOracle()" id="submit-btn" 
-                class="w-full py-6 bg-transparent border border-yellow-700/30 rounded-full text-yellow-600 tracking-[0.8em] font-light btn-glow uppercase text-xs">
-                递给占梦师
-            </button>
+            <div class="flex justify-center">
+                <button onclick="startOracle()" id="submit-btn" class="btn-main px-14 py-6 uppercase">
+                    递给占梦师
+                </button>
+            </div>
         </section>
 
-        <!-- 对话视图 -->
-        <section id="oracle-view" class="hidden space-y-10 pb-32">
-            <div id="chat-flow" class="space-y-10"></div>
-            <div id="loading-area" class="hidden py-20 flex flex-col items-center space-y-6">
-                <div class="w-10 h-10 border-2 border-yellow-600/10 border-t-yellow-600 rounded-full animate-spin"></div>
-                <p class="text-[10px] text-yellow-600/40 tracking-[0.4em] uppercase">占梦师正在进入梦境</p>
+        <!-- 对话阶段 -->
+        <section id="oracle-view" class="hidden space-y-16 pb-48">
+            <div id="chat-flow" class="space-y-16"></div>
+            
+            <div id="loading-area" class="hidden py-24 flex flex-col items-center space-y-6">
+                <div class="w-6 h-6 border border-white/5 border-t-white/40 rounded-full animate-spin"></div>
+                <p class="text-[8px] text-gray-700 tracking-[0.8em] uppercase">Deep Diving</p>
             </div>
-            <div id="reply-box" class="hidden glass-card p-4 flex gap-4 sticky bottom-8 shadow-2xl">
-                <input id="user-reply" type="text" class="flex-1 bg-transparent border-none focus:ring-0 text-sm px-4" placeholder="向深渊回应...">
-                <button onclick="submitReply()" class="p-3 text-yellow-600 hover:scale-125 transition-transform"><i data-lucide="send" class="w-5 h-5"></i></button>
+
+            <!-- 回复框 -->
+            <div id="reply-box" class="hidden glass-panel p-3 flex gap-3 sticky bottom-10 shadow-3xl mx-auto max-w-xl border-white/5">
+                <input id="user-reply" type="text" class="flex-1 bg-transparent border-none focus:ring-0 text-sm px-6 text-white font-light" placeholder="向深渊回应...">
+                <button onclick="submitReply()" class="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full hover:scale-105 transition-transform">
+                    <i data-lucide="arrow-up" class="w-5 h-5"></i>
+                </button>
             </div>
         </section>
     </main>
 
-    <!-- 设置面板 -->
-    <div id="settings-modal" class="fixed inset-0 bg-black/95 backdrop-blur-xl hidden z-50 flex items-center justify-center p-8">
-        <div class="glass-card w-full max-w-sm p-10 space-y-8 border-yellow-600/20">
-            <div class="text-center space-y-2">
-                <h3 class="text-yellow-600 oracle-title text-2xl font-bold">CONFIG</h3>
-                <p class="text-[10px] text-gray-600 uppercase tracking-widest">设置你的感应参数</p>
+    <!-- 配置面板 -->
+    <div id="settings-modal" class="fixed inset-0 bg-black/98 backdrop-blur-3xl hidden z-50 flex items-center justify-center p-8">
+        <div class="glass-panel w-full max-w-md p-14 space-y-12 border-white/10">
+            <div class="text-center space-y-3">
+                <h3 class="oracle-title text-3xl font-bold tracking-widest">CONFIG</h3>
+                <p class="text-[9px] text-gray-700 uppercase tracking-[0.5em]">感应场参数</p>
             </div>
-            <div class="space-y-6">
+            
+            <div class="space-y-8">
                 <div class="space-y-2">
-                    <label class="text-[10px] text-gray-500 uppercase tracking-tighter ml-1">API Key</label>
-                    <input id="api-key-input" type="password" placeholder="粘贴你的密钥" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:border-yellow-600/50 outline-none text-white">
+                    <label class="text-[9px] text-gray-500 uppercase ml-1">API Key</label>
+                    <input id="api-key-input" type="password" class="w-full bg-white/5 border border-white/10 rounded-3xl px-8 py-5 text-sm text-white focus:border-white/20 outline-none transition-all">
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[10px] text-gray-500 uppercase tracking-tighter ml-1">Model (如报错请尝试更换)</label>
-                    <input id="model-name-input" type="text" placeholder="gemini-1.5-flash" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:border-yellow-600/50 outline-none text-white">
+                    <label class="text-[9px] text-gray-500 uppercase ml-1">Model ID</label>
+                    <input id="model-name-input" type="text" placeholder="gemini-2.5-flash-preview-09-2025" class="w-full bg-white/5 border border-white/10 rounded-3xl px-8 py-5 text-sm text-white focus:border-white/20 outline-none transition-all">
                 </div>
             </div>
-            <button onclick="saveSettings()" class="w-full py-5 bg-yellow-600/10 text-yellow-600 border border-yellow-600/20 rounded-2xl text-xs tracking-[0.5em] font-bold uppercase hover:bg-yellow-600/20 transition-all">确认并保存</button>
-            <button onclick="toggleSettings()" class="w-full text-[10px] text-gray-600 hover:text-white uppercase tracking-widest">取消</button>
+
+            <button onclick="saveSettings()" class="w-full py-5 bg-white text-black rounded-full text-[11px] font-bold uppercase tracking-[0.4em] hover:bg-gray-100 transition-all">
+                同步感应
+            </button>
+            <button onclick="toggleSettings()" class="w-full text-[9px] text-gray-700 hover:text-white uppercase tracking-widest text-center mt-4">返回</button>
         </div>
     </div>
 
     <script>
         let apiKey = localStorage.getItem('dream_oracle_key') || "";
-        let modelName = localStorage.getItem('dream_oracle_model') || "gemini-1.5-flash"; 
+        // 锁定为你截图中的 Gemini 2.5 Flash ID
+        let modelName = localStorage.getItem('dream_oracle_model') || "gemini-2.5-flash-preview-09-2025"; 
         
         let chatHistory = [];
         let currentTurn = 0;
 
-        const systemPrompt = `你是一位深谙荣格心理学的占梦师。语气神秘、空灵。
-        Turn 1&2: 识别意象，提出具体问题（带示例）。
-        Turn 3: 给出分析、action和image_prompt。
-        输出：严格 JSON 格式。`;
+        const systemPrompt = `你是一位深谙荣格心理学的占梦师。语气空灵、简洁、极具张力。
+        Turn 1&2: 提出具象化的问题（带示例）。
+        Turn 3: 给出分析结论、现实行动(action)和绘图提示词(image_prompt)。
+        所有输出必须为纯 JSON 格式。`;
 
         lucide.createIcons();
 
@@ -172,17 +218,17 @@
             localStorage.setItem('dream_oracle_key', apiKey);
             localStorage.setItem('dream_oracle_model', modelName);
             toggleSettings();
-            alert("感应参数已更新。");
+            alert("感应场已重新校准。");
         }
 
         async function fetchOracle(text) {
-            if (!apiKey) { toggleSettings(); throw new Error("缺少感应密钥"); }
+            if (!apiKey) { toggleSettings(); throw new Error("缺少授权密钥"); }
             chatHistory.push({ role: "user", parts: [{ text: text }] });
             const url = `/api/google/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
             const payload = {
                 contents: chatHistory,
                 systemInstruction: { parts: [{ text: systemPrompt }] },
-                generationConfig: { responseMimeType: "application/json", temperature: 0.85 }
+                generationConfig: { responseMimeType: "application/json", temperature: 0.9, maxOutputTokens: 1024 }
             };
             const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             const data = await response.json();
@@ -202,7 +248,7 @@
                 const data = await fetchOracle(val);
                 currentTurn = 1;
                 renderStep(data);
-            } catch (e) { alert(`占梦受阻: ${e.message}`); location.reload(); }
+            } catch (e) { alert(`感应中断: ${e.message}`); location.reload(); }
         }
 
         async function submitReply() {
@@ -215,23 +261,30 @@
                 const data = await fetchOracle(val);
                 currentTurn++;
                 renderStep(data);
-            } catch (e) { alert(`感应中断: ${e.message}`); }
+            } catch (e) { alert(`信号遗失: ${e.message}`); }
         }
 
         function renderStep(data) {
             document.getElementById('loading-area').classList.add('hidden');
             const flow = document.getElementById('chat-flow');
-            const card = document.createElement('div');
-            card.className = "glass-card p-12 space-y-10 ink-appear";
-            card.innerHTML = `
+            const container = document.createElement('div');
+            container.className = "ink-reveal space-y-14";
+            container.innerHTML = `
                 <div class="space-y-6">
-                    <p class="text-[9px] tracking-[0.6em] text-yellow-600/40 uppercase font-bold text-center">Revelation</p>
-                    <p class="text-2xl italic font-light leading-relaxed text-gray-100 dream-font text-center">${data.analysis}</p>
+                    <p class="text-[8px] tracking-[0.8em] text-white/10 uppercase font-bold text-center">Revelation</p>
+                    <p class="text-4xl font-extralight leading-snug text-white dream-font text-center px-4">${data.analysis}</p>
                 </div>
-                ${data.question && currentTurn < 3 ? `<div class="pt-8 border-t border-white/5"><p class="text-sm text-gray-400 font-light italic text-center">"${data.question}"</p></div>` : ''}
-                ${data.action && currentTurn >= 3 ? `<div class="p-8 bg-yellow-900/5 rounded-3xl border border-yellow-700/10 text-center"><p class="text-[9px] text-yellow-700/60 uppercase tracking-widest mb-3">现实神谕</p><p class="text-sm text-yellow-600 font-medium">${data.action}</p></div>` : ''}
+                ${data.question && currentTurn < 3 ? `
+                    <div class="py-14 border-y border-white/5">
+                        <p class="text-sm text-gray-500 font-light italic text-center px-12 leading-relaxed">"${data.question}"</p>
+                    </div>` : ''}
+                ${data.action && currentTurn >= 3 ? `
+                    <div class="p-16 glass-panel border-white/10 text-center shadow-3xl">
+                        <p class="text-[8px] text-gray-700 uppercase tracking-[0.6em] mb-6">现实神谕</p>
+                        <p class="text-lg text-white font-medium tracking-widest">${data.action}</p>
+                    </div>` : ''}
             `;
-            flow.appendChild(card);
+            flow.appendChild(container);
             if (currentTurn < 3) document.getElementById('reply-box').classList.remove('hidden');
             lucide.createIcons();
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
