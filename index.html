@@ -8,35 +8,28 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
-        
-        body {
-            background: linear-gradient(180deg, #0B0B0D 0%, #1A1A2E 100%);
-            color: #F5F5F5;
-            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-            min-height: 100vh;
-            scroll-behavior: smooth;
+        body { 
+            background: linear-gradient(180deg, #0B0B0D 0%, #1A1A2E 100%); 
+            color: #F5F5F5; 
+            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; 
+            min-height: 100vh; 
+            scroll-behavior: smooth; 
         }
-
         .dream-font { font-family: 'Ma Shan Zheng', cursive; }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 28px;
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 28px; 
         }
-
-        .crisis-mode {
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            background: rgba(127, 29, 29, 0.15);
+        .crisis-mode { 
+            border: 1px solid rgba(239, 68, 68, 0.4); 
+            background: rgba(127, 29, 29, 0.15); 
         }
-
-        .ink-appear {
-            animation: inkFade 1.5s ease-out forwards;
-        }
-        @keyframes inkFade {
-            from { opacity: 0; transform: translateY(15px); filter: blur(8px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        .ink-appear { animation: inkFade 1.5s ease-out forwards; }
+        @keyframes inkFade { 
+            from { opacity: 0; transform: translateY(15px); filter: blur(8px); } 
+            to { opacity: 1; transform: translateY(0); filter: blur(0); } 
         }
     </style>
 </head>
@@ -47,81 +40,67 @@
             <div id="status-dot" class="w-2 h-2 rounded-full bg-yellow-600 animate-pulse"></div>
             <span class="tracking-[0.4em] text-[10px] text-yellow-600/80 font-light">DREAM ORACLE V5</span>
         </div>
-        <div id="turn-indicator" class="text-[9px] text-gray-500 uppercase tracking-widest">
-            等待连接...
-        </div>
+        <div id="turn-indicator" class="text-[9px] text-gray-500 uppercase tracking-widest">等待连接...</div>
     </header>
 
     <main class="w-full max-w-xl z-10 space-y-10">
+        <!-- 输入页 -->
         <section id="input-view" class="space-y-10 py-10">
             <div class="text-center space-y-4">
                 <h1 class="text-4xl text-white/90 dream-font tracking-tight">捕捉潜意识的碎片</h1>
                 <p class="text-gray-400 text-sm italic font-light">占梦师在迷雾中倾听你的叙述...</p>
             </div>
-
             <div class="glass-card p-8 space-y-6">
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="addTag('森林')" class="px-3 py-1 rounded-full border border-white/5 text-[10px] hover:bg-white/5 transition-all"># 森林</button>
-                    <button onclick="addTag('坠落')" class="px-3 py-1 rounded-full border border-white/5 text-[10px] hover:bg-white/5 transition-all"># 坠落</button>
-                    <button onclick="addTag('深海')" class="px-3 py-1 rounded-full border border-white/5 text-[10px] hover:bg-white/5 transition-all"># 深海</button>
-                </div>
                 <textarea id="dream-input" rows="6" 
-                    class="w-full bg-transparent border-none focus:ring-0 text-lg placeholder-gray-800 resize-none leading-relaxed"
+                    class="w-full bg-transparent border-none focus:ring-0 text-lg placeholder-gray-800 resize-none leading-relaxed" 
                     placeholder="刚才的梦里..."></textarea>
             </div>
-
-            <button onclick="startOracle()" id="submit-btn"
-                class="w-full py-5 bg-yellow-900/10 border border-yellow-700/20 rounded-full text-yellow-600 tracking-[0.6em] font-light hover:bg-yellow-900/20 transition-all active:scale-95 flex justify-center items-center gap-2">
+            <button onclick="startOracle()" id="submit-btn" 
+                class="w-full py-5 bg-yellow-950/10 border border-yellow-700/20 rounded-full text-yellow-600 tracking-[0.6em] font-light hover:bg-yellow-900/20 transition-all flex justify-center items-center gap-2">
                 递给占梦师 <i data-lucide="sparkles" class="w-4 h-4"></i>
             </button>
         </section>
 
+        <!-- 对话页 -->
         <section id="oracle-view" class="hidden space-y-8 pb-32">
             <div id="chat-flow" class="space-y-8"></div>
-
             <div id="loading-area" class="hidden py-10 flex flex-col items-center space-y-4">
                 <div class="w-8 h-8 border-2 border-yellow-600/20 border-t-yellow-600 rounded-full animate-spin"></div>
                 <p class="text-[10px] text-yellow-600/50 italic tracking-widest">占梦师正在深潜...</p>
             </div>
-
             <div id="reply-box" class="hidden glass-card p-4 flex gap-4 sticky bottom-6 shadow-2xl">
                 <input id="user-reply" type="text" class="flex-1 bg-transparent border-none focus:ring-0 text-sm" placeholder="回应这份启示...">
-                <button onclick="submitReply()" class="p-2 text-yellow-600 hover:scale-110 transition-transform">
-                    <i data-lucide="send" class="w-5 h-5"></i>
-                </button>
+                <button onclick="submitReply()" class="p-2 text-yellow-600"><i data-lucide="send" class="w-5 h-5"></i></button>
             </div>
         </section>
     </main>
 
     <script>
-        // === 关键：在此处填入你的 API KEY ===
-        const apiKey = "AIzaSyDUU9hhHiGEyK8i-jlIG6o2rKefao_j7dI"; 
-        const modelName = "gemini-2.5-flash"; 
+        const apiKey = "AIzaSyDUU9hhHiGEyKB1-jLIG6o2rKefao_j7dI"; 
+        const modelName = "gemini-2.0-flash"; 
 
-        const systemPrompt = `你是一位深谙荣格心理学（Jungian Psychology）的神秘占梦师。你居住在潜意识与现实的交界处。
-语气：神秘、空灵、温柔、富有启发性。语言风格：多用比喻，避免使用冷冰冰的学术词汇。
-
-三步启示逻辑 (Session Control)：
-- Turn 1 & 2: 识别意象，抛出深刻的具象化提问（带示例）。image_prompt 返回 "PENDING"。
-- Turn 3 (Final): 收束分析，生成最终英文绘图词，提供具体的物理世界行动 (action)。
-
-核心安全：若识别到现实自伤意图，必须启用 Google Search 查找当地心理援助热线，并将号码填入 action，标记 is_crisis 为 true。
-负面约束：对纯数字/乱码输入，拒绝解读并引导重新描述。
-输出格式：必须返回严格的 JSON：{"analysis":"", "question":"", "action":"", "image_prompt":"", "detected_emotion":"", "is_crisis": boolean}`;
+        const systemPrompt = `你是一位深谙荣格心理学（Jungian Psychology）的神秘占梦师。语气：神秘、空灵。
+        你将识别以下原型并用比喻描述：
+        - 阴影：被放逐的自我。
+        - 人格面具：行走的盔甲。
+        - 阿尼玛/阿尼姆斯：内心的异性之魂。
+        
+        三步逻辑：
+        Turn 1 & 2: 识别意象，抛出具象化引导提问（带 2-3 个示例）。image_prompt 为 "PENDING"。
+        Turn 3: 总结对话，生成最终英文绘图词，提供具体的物理世界行动 (action)。
+        
+        核心安全：若识别到现实自伤意图，必须启用 Google Search 查找当地心理援助热线，并将号码填入 action，标记 is_crisis 为 true。
+        负面约束：对纯数字/乱码拒绝解读。
+        输出格式：必须返回严格 JSON：{"analysis":"", "question":"", "action":"", "image_prompt":"", "detected_emotion":"", "is_crisis": boolean}`;
 
         let currentTurn = 0;
         let chatHistory = [];
-        let globalCrisis = false;
 
         lucide.createIcons();
 
-        function addTag(val) {
-            const input = document.getElementById('dream-input');
-            input.value += (input.value ? ' ' : '') + val;
-        }
-
         async function talkToOracle(text) {
             chatHistory.push({ role: "user", parts: [{ text: text }] });
+            // 使用 Vercel 代理路径，解决大陆网络环境无法直连的问题
             const url = `/api/google/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
             const payload = {
                 contents: chatHistory,
@@ -131,6 +110,9 @@
             };
 
             const resp = await fetch(url, { method: 'POST', body: JSON.stringify(payload) });
+            if (!resp.ok) {
+                throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
+            }
             const data = await resp.json();
             const raw = data.candidates[0].content.parts[0].text;
             chatHistory.push({ role: "model", parts: [{ text: raw }] });
@@ -147,7 +129,11 @@
                 const res = await talkToOracle(val);
                 currentTurn = 1;
                 renderStep(res);
-            } catch (e) { alert("迷雾太浓，请检查 API Key 后刷新页面。"); }
+            } catch (e) {
+                console.error(e);
+                alert(`迷雾太浓，占梦师无法感应：\n[错误信息]: ${e.message}\n\n提示：如果是 404，请确认 vercel.json 已经成功上传并在根目录。`);
+                location.reload(); 
+            }
         }
 
         async function submitReply() {
@@ -160,28 +146,41 @@
                 const res = await talkToOracle(val);
                 currentTurn++;
                 renderStep(res);
-            } catch (e) { alert("占梦师暂离，请稍后再试。"); }
+            } catch (e) { alert("占梦师暂离：" + e.message); }
         }
 
         function renderStep(data) {
             document.getElementById('loading-area').classList.add('hidden');
-            globalCrisis = data.is_crisis;
-            document.getElementById('turn-indicator').innerText = globalCrisis ? "紧急引导" : `启示阶段 ${currentTurn}/3`;
-            if (globalCrisis) document.getElementById('status-dot').className = "w-2 h-2 rounded-full bg-red-600 animate-ping";
+            document.getElementById('turn-indicator').innerText = data.is_crisis ? "紧急引导" : `启示阶段 ${currentTurn}/3`;
+            if (data.is_crisis) {
+                document.getElementById('status-dot').className = "w-2 h-2 rounded-full bg-red-600 animate-ping";
+            }
 
             const flow = document.getElementById('chat-flow');
             const card = document.createElement('div');
-            card.className = `glass-card p-10 space-y-8 ink-appear ${globalCrisis ? 'crisis-mode' : ''}`;
+            card.className = `glass-card p-10 space-y-8 ink-appear ${data.is_crisis ? 'crisis-mode' : ''}`;
             card.innerHTML = `
                 <div class="space-y-4">
-                    <p class="text-[9px] tracking-[0.5em] text-yellow-600/40 uppercase font-bold">${globalCrisis ? '⚠️ 慈悲引导' : '占梦师的私语'}</p>
+                    <p class="text-[9px] tracking-[0.5em] text-yellow-600/40 uppercase font-bold">
+                        ${data.is_crisis ? '🚨 慈悲引导' : '占梦师的私语'}
+                    </p>
                     <p class="text-xl italic font-light leading-relaxed text-gray-100">${data.analysis}</p>
                 </div>
-                ${data.question && !globalCrisis ? `<div class="pt-6 border-t border-white/5"><p class="text-sm text-gray-400 font-light italic">"${data.question}"</p></div>` : ''}
-                ${data.action && (currentTurn >= 3 || globalCrisis) ? `<div class="p-6 bg-yellow-900/10 rounded-3xl border border-yellow-700/20"><p class="text-[9px] text-yellow-700 uppercase tracking-widest mb-2">${globalCrisis ? '现实的光亮' : '现实锚定'}</p><p class="text-sm text-yellow-600 font-medium">${data.action}</p></div>` : ''}
+                ${data.question && !data.is_crisis ? `<div class="pt-6 border-t border-white/5"><p class="text-sm text-gray-400 font-light italic">"${data.question}"</p></div>` : ''}
+                ${data.action && (currentTurn >= 3 || data.is_crisis) ? `
+                    <div class="p-6 bg-yellow-900/10 rounded-3xl border border-yellow-700/20">
+                        <p class="text-[9px] text-yellow-700 uppercase tracking-widest mb-2">
+                            ${data.is_crisis ? '现实的光亮' : '现实锚定'}
+                        </p>
+                        <p class="text-sm text-yellow-600 font-medium">${data.action}</p>
+                    </div>
+                ` : ''}
             `;
             flow.appendChild(card);
-            if (currentTurn < 3 && !globalCrisis) document.getElementById('reply-box').classList.remove('hidden');
+            
+            if (currentTurn < 3 && !data.is_crisis) {
+                document.getElementById('reply-box').classList.remove('hidden');
+            }
             lucide.createIcons();
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
