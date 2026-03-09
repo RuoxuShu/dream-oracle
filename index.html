@@ -122,7 +122,7 @@
 
         async function talkToOracle(text) {
             chatHistory.push({ role: "user", parts: [{ text: text }] });
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+            const url = `/api/google/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
             const payload = {
                 contents: chatHistory,
                 systemInstruction: { parts: [{ text: systemPrompt }] },
