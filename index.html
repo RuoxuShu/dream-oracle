@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>潜意识绘本 | 梦境仓库</title>
+    <title>潜意识绘本 | 幻梦启示录</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* 引入更符合中文高级感的字体 */
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@100;300;400&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;400;700&display=swap');
         
         :root {
@@ -27,12 +26,11 @@
             letter-spacing: 0.05em;
         }
 
-        /* 标题：中西合璧，Lovable 风格的高级排版 */
         .brand-title { 
             font-family: 'Noto Serif SC', serif; 
             font-weight: 200;
             letter-spacing: 0.8em;
-            margin-right: -0.8em; /* 抵消最后一个字的间距使其居中 */
+            margin-right: -0.8em;
             background: linear-gradient(to bottom, #ffffff 30%, #777777 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -47,7 +45,6 @@
 
         .dream-font { font-family: 'Ma Shan Zheng', cursive; }
         
-        /* 极致轻薄的玻璃质感 */
         .glass-panel { 
             background: rgba(255, 255, 255, 0.01); 
             backdrop-filter: blur(40px); 
@@ -71,14 +68,13 @@
             transform: translateY(-1px);
         }
 
-        /* 主操作按钮：纯白反差设计 */
         .btn-main {
             background: #ffffff;
             color: #000000;
             border-radius: 9999px;
             font-size: 0.7rem;
             letter-spacing: 0.4em;
-            padding-left: 2.4rem; /* 增加偏移量以平衡字间距 */
+            padding-left: 1rem;
             font-weight: 700;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
@@ -98,7 +94,6 @@
 </head>
 <body class="flex flex-col items-center px-6 py-16 md:py-24">
 
-    <!-- 极简页眉 -->
     <header class="w-full max-w-2xl flex justify-between items-center mb-24 z-10">
         <div class="flex items-center gap-3">
             <div class="w-1 h-1 rounded-full bg-yellow-600"></div>
@@ -111,21 +106,19 @@
     </header>
 
     <main class="w-full max-w-2xl z-10">
-        <!-- 录入阶段 -->
         <section id="input-view" class="space-y-16">
             <div class="text-center space-y-4">
                 <h1 class="text-5xl md:text-6xl brand-title">幻梦启示录</h1>
                 <p class="brand-sub">THE DREAM DIARY</p>
             </div>
 
-            <!-- 意象快速选择 -->
             <div class="flex flex-wrap justify-center gap-2 max-w-sm mx-auto">
                 <button onclick="addTag('森林')" class="tag-pill px-4 py-1.5 rounded-full">森林</button>
                 <button onclick="addTag('坠落')" class="tag-pill px-4 py-1.5 rounded-full">坠落</button>
                 <button onclick="addTag('深海')" class="tag-pill px-4 py-1.5 rounded-full">深海</button>
                 <button onclick="addTag('飞翔')" class="tag-pill px-4 py-1.5 rounded-full">飞翔</button>
-                <button onclick="addTag('无脸人')" class="tag-pill px-4 py-1.5 rounded-full">无脸人</button>
-                <button onclick="addTag('金色时钟')" class="tag-pill px-4 py-1.5 rounded-full">金色时钟</button>
+                <button onclick="addTag('影子')" class="tag-pill px-4 py-1.5 rounded-full">影子</button>
+                <button onclick="addTag('时钟')" class="tag-pill px-4 py-1.5 rounded-full">时钟</button>
             </div>
 
             <div class="glass-panel p-2">
@@ -141,16 +134,14 @@
             </div>
         </section>
 
-        <!-- 对话阶段 -->
         <section id="oracle-view" class="hidden space-y-16 pb-48">
             <div id="chat-flow" class="space-y-16"></div>
             
             <div id="loading-area" class="hidden py-24 flex flex-col items-center space-y-6">
                 <div class="w-6 h-6 border border-white/5 border-t-white/40 rounded-full animate-spin"></div>
-                <p class="text-[8px] text-gray-700 tracking-[0.8em] uppercase">Deep Diving</p>
+                <p class="text-[8px] text-gray-700 tracking-[0.8em] uppercase">正在深潜</p>
             </div>
 
-            <!-- 回复框 -->
             <div id="reply-box" class="hidden glass-panel p-3 flex gap-3 sticky bottom-10 shadow-3xl mx-auto max-w-xl border-white/5">
                 <input id="user-reply" type="text" class="flex-1 bg-transparent border-none focus:ring-0 text-sm px-6 text-white font-light" placeholder="向深渊回应...">
                 <button onclick="submitReply()" class="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full hover:scale-105 transition-transform">
@@ -160,11 +151,10 @@
         </section>
     </main>
 
-    <!-- 配置面板 -->
     <div id="settings-modal" class="fixed inset-0 bg-black/98 backdrop-blur-3xl hidden z-50 flex items-center justify-center p-8">
         <div class="glass-panel w-full max-w-md p-14 space-y-12 border-white/10">
             <div class="text-center space-y-3">
-                <h3 class="oracle-title text-3xl font-bold tracking-widest">CONFIG</h3>
+                <h3 class="oracle-title text-3xl font-bold tracking-widest text-white">CONFIG</h3>
                 <p class="text-[9px] text-gray-700 uppercase tracking-[0.5em]">感应场参数</p>
             </div>
             
@@ -175,7 +165,7 @@
                 </div>
                 <div class="space-y-2">
                     <label class="text-[9px] text-gray-500 uppercase ml-1">Model ID</label>
-                    <input id="model-name-input" type="text" placeholder="gemini-2.5-flash-preview-09-2025" class="w-full bg-white/5 border border-white/10 rounded-3xl px-8 py-5 text-sm text-white focus:border-white/20 outline-none transition-all">
+                    <input id="model-name-input" type="text" placeholder="gemini-2.5-flash-lite-preview-09-2025" class="w-full bg-white/5 border border-white/10 rounded-3xl px-8 py-5 text-sm text-white focus:border-white/20 outline-none transition-all">
                 </div>
             </div>
 
@@ -188,16 +178,16 @@
 
     <script>
         let apiKey = localStorage.getItem('dream_oracle_key') || "";
-        // 锁定为你截图中的 Gemini 2.5 Flash ID
-        let modelName = localStorage.getItem('dream_oracle_model') || "gemini-2.5-flash-preview-09-2025"; 
+        // 修正为 2.5 系列最兼容的 ID
+        let modelName = localStorage.getItem('dream_oracle_model') || "gemini-2.5-flash-lite-preview-09-2025"; 
         
         let chatHistory = [];
         let currentTurn = 0;
 
         const systemPrompt = `你是一位深谙荣格心理学的占梦师。语气空灵、简洁、极具张力。
-        Turn 1&2: 提出具象化的问题（带示例）。
-        Turn 3: 给出分析结论、现实行动(action)和绘图提示词(image_prompt)。
-        所有输出必须为纯 JSON 格式。`;
+        Turn 1&2: 提出具象化的问题。
+        Turn 3: 给出分析、action和image_prompt。
+        必须严格以 JSON 格式输出。`;
 
         lucide.createIcons();
 
@@ -214,25 +204,42 @@
 
         function saveSettings() {
             apiKey = document.getElementById('api-key-input').value.trim();
-            modelName = document.getElementById('model-name-input').value.trim();
+            modelName = document.getElementById('model-name-input').value.trim() || "gemini-2.5-flash-lite-preview-09-2025";
             localStorage.setItem('dream_oracle_key', apiKey);
             localStorage.setItem('dream_oracle_model', modelName);
             toggleSettings();
-            alert("感应场已重新校准。");
         }
 
         async function fetchOracle(text) {
             if (!apiKey) { toggleSettings(); throw new Error("缺少授权密钥"); }
             chatHistory.push({ role: "user", parts: [{ text: text }] });
+            
             const url = `/api/google/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+            
             const payload = {
                 contents: chatHistory,
                 systemInstruction: { parts: [{ text: systemPrompt }] },
-                generationConfig: { responseMimeType: "application/json", temperature: 0.9, maxOutputTokens: 1024 }
+                tools: [{ "google_search": {} }],
+                generationConfig: { 
+                    responseMimeType: "application/json", 
+                    temperature: 0.9,
+                    maxOutputTokens: 1024 
+                }
             };
-            const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+
+            const response = await fetch(url, { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(payload) 
+            });
+
             const data = await response.json();
-            if (!response.ok) throw new Error(data.error?.message || `HTTP ${response.status}`);
+            
+            if (!response.ok) {
+                // 如果报错，直接抛出 Google 给出的具体 message
+                throw new Error(data.error?.message || `HTTP ${response.status}`);
+            }
+            
             const resultText = data.candidates[0].content.parts[0].text;
             chatHistory.push({ role: "model", parts: [{ text: resultText }] });
             return JSON.parse(resultText);
@@ -248,7 +255,10 @@
                 const data = await fetchOracle(val);
                 currentTurn = 1;
                 renderStep(data);
-            } catch (e) { alert(`感应中断: ${e.message}`); location.reload(); }
+            } catch (e) { 
+                alert(`占梦受阻: ${e.message}\n\n建议检查：\n1. API Key 是否有效\n2. 模型 ID [${modelName}] 是否正确`); 
+                location.reload(); 
+            }
         }
 
         async function submitReply() {
@@ -276,7 +286,7 @@
                 </div>
                 ${data.question && currentTurn < 3 ? `
                     <div class="py-14 border-y border-white/5">
-                        <p class="text-sm text-gray-500 font-light italic text-center px-12 leading-relaxed">"${data.question}"</p>
+                        <p class="text-sm text-gray-600 font-light italic text-center px-12 leading-relaxed">"${data.question}"</p>
                     </div>` : ''}
                 ${data.action && currentTurn >= 3 ? `
                     <div class="p-16 glass-panel border-white/10 text-center shadow-3xl">
